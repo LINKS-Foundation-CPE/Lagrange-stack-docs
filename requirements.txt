@@ -1,0 +1,9 @@
+# Documentation build dependencies, so the GitLab Pages and GitHub Pages jobs
+# render identically. Kept to compatible-release ranges rather than exact pins:
+# the theme options used here are stable across mkdocs-material 9.x.
+mkdocs-material~=9.6
+
+# MkDocs 2.0 removes the plugin system and rewrites theming, with no migration
+# path — mkdocs-material will not work on it. Pin the framework to 1.x so a CI
+# run does not pick up 2.0 the day it is released.
+mkdocs>=1.6,<2

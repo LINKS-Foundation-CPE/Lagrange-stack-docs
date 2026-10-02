@@ -1,0 +1,44 @@
+# CI for the Lagrange technical documentation.
+#
+# Two jobs:
+#   build — runs on every branch and merge request, so a broken link or a page
+#           missing from the nav fails review instead of the deploy.
+#   pages — deploys GitLab Pages, default branch only.
+#
+# The GitHub Pages counterpart lives in .github/workflows/pages.yml. Both CI
+# files are tracked on every branch (including the public one) so that `public`
+# stays a strict cherry-picked subset of `main` with no branch-only files to
+# reconcile; a GitHub workflow is simply inert on GitLab, and vice versa.
+
+default:
+  image: python:3.12-slim
+  before_script:
+    - pip install --no-cache-dir -r requirements.txt
+
+stages:
+  - build
+  - deploy
+
+# --strict turns warnings into errors: broken internal links, pages absent from
+# the nav, and unreadable references all fail here.
+build:
+  stage: build
+  script:
+    - mkdocs build --strict --site-dir site
+  artifacts:
+    paths:
+      - site
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+
+pages:
+  stage: deploy
+  script:
+    - mkdocs build --strict --site-dir public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

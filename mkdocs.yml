@@ -1,0 +1,102 @@
+site_name: Lagrange management stack — technical documentation
+site_description: >-
+  Architecture, deployment and API documentation for the Lagrange quantum-computer
+  management stack: QC Gateway, quantum-api, quantum-dashboard.
+# The canonical (public) URL: GitHub Pages, published from the `public` branch.
+# The GitLab Pages copy built from `main` is the same site.
+site_url: https://links-foundation-cpe.github.io/Lagrange-stack-docs/
+repo_url: https://github.com/LINKS-Foundation-CPE/Lagrange-stack-docs
+repo_name: Lagrange-stack-docs
+# No "edit this page" links: GitHub is a mirror, changes are made upstream.
+edit_uri: ""
+copyright: >-
+  © LINKS Foundation — documentation licensed under EUPL-1.2
+
+theme:
+  name: material
+  features:
+    - navigation.indexes
+    - navigation.path
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.betterem
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - architecture/index.md
+      - Components and repositories: architecture/components.md
+      - Identity and authorization: architecture/identity.md
+      - Tenancy, budgets and billing: architecture/accounting.md
+      - Life of a job: architecture/job-lifecycle.md
+  - Getting started:
+      - getting-started/index.md
+      - One-command stack: getting-started/portable-deployment.md
+      - Deploying component by component: getting-started/manual-deployment.md
+      - Running your first circuit: getting-started/first-circuit.md
+      - Troubleshooting: getting-started/troubleshooting.md
+  - Using the portal:
+      - using/index.md
+      - Day-to-day use: using/day-to-day.md
+      - Administration: using/administration.md
+  - Components:
+      - components/index.md
+      - QC Gateway: components/qc-gateway.md
+      - quantum-api: components/quantum-api.md
+      - quantum-dashboard: components/quantum-dashboard.md
+      - Identity provider: components/identity-provider.md
+  - Reference:
+      - reference/index.md
+      - quantum-api HTTP API: reference/quantum-api-http.md
+      - Gateway ↔ backend contract: reference/machine-endpoints.md
+      - Configuration reference: reference/configuration.md
+      - Database schema: reference/database-schema.md
+  - Development:
+      - development/index.md
+      - Extending the stack: development/extending.md
+      - Release and publishing: development/releases.md
+  - About:
+      - about/index.md
+      - Licensing: about/licensing.md

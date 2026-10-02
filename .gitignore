@@ -1,0 +1,5 @@
+.DS_Store
+site/
+public/
+.venv/
+__pycache__/
