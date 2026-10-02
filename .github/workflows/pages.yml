@@ -41,7 +41,9 @@ jobs:
           cache-dependency-path: requirements.txt
 
       - name: Install dependencies
-        run: pip install --no-cache-dir -r requirements.txt
+        # No --no-cache-dir: setup-python caches ~/.cache/pip, and fails the job
+        # in its post step when that directory was never created.
+        run: pip install -r requirements.txt
 
       # --strict fails on broken internal links and pages missing from the nav.
       - name: Build
