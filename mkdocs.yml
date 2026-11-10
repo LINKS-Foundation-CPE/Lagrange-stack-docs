@@ -81,6 +81,9 @@ nav:
       - using/index.md
       - Day-to-day use: using/day-to-day.md
       - Administration: using/administration.md
+  - HPC integration (Sqed):
+      - hpc/index.md
+      - Deploying Sqed: hpc/deployment.md
   - Components:
       - components/index.md
       - QC Gateway: components/qc-gateway.md

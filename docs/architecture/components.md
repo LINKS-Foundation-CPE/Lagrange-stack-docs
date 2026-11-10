@@ -127,6 +127,7 @@ because the documentation refers to them; not all are public.
 | Repository | What it is |
 |---|---|
 | **portable-deployment** ([Lagrange-stack-portable](https://github.com/LINKS-Foundation-CPE/Lagrange-stack-portable)) | One-command deployment of the entire stack on a single Linux host with a self-signed certificate and no DNS. The fastest way to get a working system — see [Getting started](../getting-started/portable-deployment.md). |
+| **prolog-epilog** ([Lagrange-prolog-epilog](https://github.com/LINKS-Foundation-CPE/Lagrange-prolog-epilog)) | SLURM prolog/epilog scripts that mint per-job tokens for the gateway's `sqed` plugins. Only used by [Sqed](../hpc/index.md), the HPC integration. |
 | **keycloak-deployment** | Deployment configuration for the identity provider, plus an idempotent realm-bootstrap script that creates the realm, clients, roles and test users the stack expects. |
 | **lagrange-billing** | Reporting application that reads the accounting tables and produces usage/billing reports from the budget-event ledger. |
 | **statuspage** | Public status page for a deployment. |

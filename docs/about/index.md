@@ -51,9 +51,11 @@ Stated plainly, because they matter if you deploy this:
   deliberately global. There is also no filter by tag on the projects list yet:
   tags are shown as chips and aggregated on the metrics endpoint, but not
   searchable.
-- **HPC / batch-scheduler integration is in development.** A variant that
-  authenticates batch-scheduler principals and accounts against a cluster's
-  licence model exists on a development branch and is not part of any release.
+- **HPC integration ([Sqed](../hpc/index.md)) is new in 2026.11.0.** It has
+  been verified end to end on a containerised SLURM 23.11 cluster against a mock
+  quantum computer, not yet on a production HPC system. Mixing Sqed submissions
+  with ordinary portal users on one deployment, each with its own accounting, is
+  not covered: the tested configuration is HPC-only.
 
 ## Contributing
 

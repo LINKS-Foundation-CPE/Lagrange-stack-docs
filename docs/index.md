@@ -31,6 +31,11 @@ Plus one external dependency the stack does not implement: an **[OIDC identity
 provider](components/identity-provider.md)** (Keycloak in every deployment so
 far).
 
+The same stack can sit behind an HPC cluster's batch scheduler instead of a
+login: **[Sqed](hpc/index.md)**, the *Slurm-based Quantum Execution Director*,
+lets SLURM jobs submit circuits with per-job tokens, and leaves access and
+accounting to SLURM.
+
 ## Where to start
 
 <div class="grid cards" markdown>

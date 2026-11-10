@@ -16,7 +16,10 @@ core: `middleware/config.py`, `middleware/vendors/<name>/config.py`,
 | Variable | Default | Purpose |
 |---|---|---|
 | `VENDOR_PLUGIN` | `iqm` | Which vendor plugin to load. |
-| `SITE_PLUGIN` | `spark` | Which site plugin to load. |
+| `SITE_PLUGIN` | `spark` | Which site plugin to load: `spark`, or `sqed` for [Sqed](../hpc/index.md). |
+| `AUTH_PLUGINS` | `keycloak` | The authentication chain, comma-separated: `keycloak`, `sqed`. A token carrying a plugin's prefix (`sqed_`) goes to that plugin alone; others are tried in order. |
+| `STRICT_PREFIX_MODE` | `false` | Refuse any token without a known prefix, for a deployment that accepts scheduler tokens only. |
+| `POLICY_PLUGIN` | `passthrough` | Admission policy: `passthrough` (the concurrency limits below) or `shot_budget` (concurrent shots scale with the SLURM licenses a job holds, `SHOTS_PER_LICENSE`, default `625000`). |
 | `MIDDLEWARE_MODE` | `production` | `production`, `authentication`, `reporting`, `maintenance`. See [modes](../architecture/job-lifecycle.md#the-gateways-operation-modes). |
 | `KEYCLOAK_ISSUER` | — | Expected `iss` of incoming tokens, e.g. `https://idp.example.org/auth/realms/cortex`. |
 | `KEYCLOAK_JWKS_URL` | — | Where to fetch signing keys. Usually the issuer + `/protocol/openid-connect/certs`. |
@@ -95,6 +98,13 @@ gets `429`s.
 | `BASE_DOMAIN` | — | Used to derive public URLs. |
 | `JOBS_PORTAL_URL` | `https://jobs.${BASE_DOMAIN}` | Results-portal base URL. Set explicitly when there is no FQDN. |
 
+### `sqed` auth plugin
+
+Read only when `sqed` is in `AUTH_PLUGINS`: `SQED_TOKEN_PREFIX`,
+`SQED_DEFAULT_ROLES`, `SQED_ROLES_LOOKUP_URL`, `SQED_ROLES_CACHE_TTL`,
+`SQED_ROLES_VERIFY_TLS`. They are described, with the settings around them, in
+[Deploying Sqed](../hpc/deployment.md#5-the-gateway-sqed-plugins).
+
 ### Deployment-stack variables
 
 Used by the reference `docker-compose.yaml` and by `configure_nginx.sh` rather
@@ -156,6 +166,7 @@ deployment without touching its `.env` changes nothing.
 | `SLOT_CONSTRAINED_RESERVATIONS` | `true` | Reservations must sit inside a pre-allocated slot of the project's organization. With `false`, `slot_id` becomes optional and the dashboard hides the slot views (it learns this from `GET /config`). |
 | `ALLOW_FOREIGN_ORG_QUEUE_IN_SLOTS` | `true` | During another organization's slot, outside reservations, the open queue stays available to everyone. With `false`, submissions are restricted to the slot's organization and organizations referencing it. |
 | `USERNAME_FORMAT` | `email` | Shape of the user identity. See below. |
+| `JOB_PORTAL_ONLY` | `false` | Serve a job viewer only. The management API and `/jobAuthorizer` are not mounted, nothing is billed, and a job report naming an unknown project creates it. For a site whose scheduler owns access and accounting, see [Deploying Sqed](../hpc/deployment.md#3-quantum-api-cluster-identities-job-portal-only). |
 | `PULSE_ACCESS_OIDC_ROLE` | `pulla_user` | The realm role that seeds `users.pulla_user` when a user is first registered. |
 
 #### `USERNAME_FORMAT`

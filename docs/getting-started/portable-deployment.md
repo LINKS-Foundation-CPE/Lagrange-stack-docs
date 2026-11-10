@@ -127,8 +127,8 @@ lifting from it when building your own deployment:
 ## Optional: HPC scheduler variant
 
 The installer has an opt-in `--with-slurm` flag that additionally stands up a
-containerised SLURM cluster and switches the gateway to an HPC-oriented site
-plugin, for work on integrating the stack with a batch scheduler. This path is
-**under active development** and depends on components not yet part of a release:
-treat it as a preview, not as a supported deployment. The default install has
-nothing to do with SLURM.
+containerised SLURM cluster with the [Sqed](../hpc/index.md) prolog/epilog
+installed, and configures the gateway and quantum-api for it. It is a test bed for
+the HPC integration, not a way to deploy it: on a real cluster, follow
+[Deploying Sqed](../hpc/deployment.md). The default install has nothing to do
+with SLURM.
