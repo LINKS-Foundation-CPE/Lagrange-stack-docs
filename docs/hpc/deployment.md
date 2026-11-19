@@ -165,6 +165,33 @@ per job, and never a key containing a token. After the job, both are gone. In
 the gateway's log a submission shows `Authenticated user via sqed (prefix)`, and
 in the portal the job appears under the user, with the account as its project.
 
+## 8. Calibration and outages
+
+SLURM knows only what the `qpu` license tells it, so when the quantum computer
+is busy with something else, or down, keep the license in step:
+
+- **Calibration**, which runs on the machine as a job and delays every job
+  behind it, is planned: reserve all the vQPUs for the window with a
+  license-only reservation. With `bf_licenses` the scheduler also keeps
+  licensed jobs from running into it, while classical jobs are unaffected.
+
+    ```sh
+    scontrol create reservation ReservationName=qpu-calibration \
+        StartTime=<start> Duration=01:00:00 \
+        Licenses=qpu@<server>:<all seats> Users=root Flags=LICENSE_ONLY
+    ```
+
+    Add `DAILY` or `WEEKLY` to `Flags=` for a recurring window.
+
+- **Outages** are not planned: `availability/qpu-availability` checks the
+  gateway's health and the machine's (through the gateway) every minute, and
+  while they fail it marks every seat of the remote license as consumed
+  outside SLURM. No new licensed job starts, and waiting ones hold no nodes.
+  It gives the seats back when the checks pass again.
+
+Both, with installation and the details of what was verified, are in the
+[prolog/epilog README](https://github.com/LINKS-Foundation-CPE/Lagrange-prolog-epilog#keeping-slurm-in-step-with-the-qpu).
+
 ## Upgrading from before 2026.11.0
 
 2026.11.0 changed where records live, from `qpu:token:<token>` to
